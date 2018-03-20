@@ -1,7 +1,6 @@
 package storagepacker
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -17,9 +16,11 @@ import (
 func testPutItem(t *testing.T, sp *StoragePackerV2, count int, entity *identity.Entity) {
 	t.Helper()
 	for i := 1; i <= count; i++ {
-		if i%500 == 0 {
-			fmt.Printf("put item iteration: %d\n", i)
-		}
+		/*
+			if i%500 == 0 {
+				fmt.Printf("put item iteration: %d\n", i)
+			}
+		*/
 		id := strconv.Itoa(i)
 		entity.ID = id
 
@@ -46,9 +47,11 @@ func testPutItem(t *testing.T, sp *StoragePackerV2, count int, entity *identity.
 func testGetItem(t *testing.T, sp *StoragePackerV2, count int, expectNil bool) {
 	t.Helper()
 	for i := 1; i <= count; i++ {
-		if i%500 == 0 {
-			fmt.Printf("get item iteration: %d\n", i)
-		}
+		/*
+			if i%500 == 0 {
+				fmt.Printf("get item iteration: %d\n", i)
+			}
+		*/
 		id := strconv.Itoa(i)
 
 		itemFetched, err := sp.GetItem(id)
@@ -82,9 +85,11 @@ func testGetItem(t *testing.T, sp *StoragePackerV2, count int, expectNil bool) {
 func testDeleteItem(t *testing.T, sp *StoragePackerV2, count int) {
 	t.Helper()
 	for i := 1; i <= count; i++ {
-		if i%500 == 0 {
-			fmt.Printf("delete item iteration: %d\n", i)
-		}
+		/*
+			if i%500 == 0 {
+				fmt.Printf("delete item iteration: %d\n", i)
+			}
+		*/
 		id := strconv.Itoa(i)
 		err := sp.DeleteItem(id)
 		if err != nil {
@@ -119,7 +124,6 @@ func TestStoragePackerV2_PutGetDelete_File(t *testing.T) {
 	if err != nil {
 		t.Fatalf("err: %s", err)
 	}
-	fmt.Printf("filePath: %q\n", filePath)
 	defer os.RemoveAll(filePath)
 
 	logger := logformat.NewVaultLogger(log.LevelTrace)
@@ -138,13 +142,13 @@ func TestStoragePackerV2_PutGetDelete_File(t *testing.T) {
 		Logger:           log.New("storagepackertest"),
 		BucketCount:      256,
 		BucketShardCount: 32,
-		BucketMaxSize:    512 * 1024,
+		BucketMaxSize:    256 * 1024,
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	count := 1000
+	count := 100
 	entity := &identity.Entity{
 		Metadata: map[string]string{
 			"samplekey1": "samplevalue1",

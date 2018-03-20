@@ -20,7 +20,7 @@ import (
 const (
 	defaultBucketCount      = 256
 	defaultBucketShardCount = 32
-	defaultBucketMaxSize    = 512 * 1024 // 512KB
+	defaultBucketMaxSize    = 256 * 1024 // 512KB
 )
 
 const (
